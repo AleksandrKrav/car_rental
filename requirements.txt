@@ -1,0 +1,12 @@
+flask==3.1.0
+pydantic==2.10.2
+pytest==8.3.3
+flask-swagger-ui==4.11.1
+PyMySQL==1.1.1
+flask-mail==0.10.0
+celery==5.4.0
+redis==5.2.0
+gunicorn==23.0.0
+cryptography==43.0.3
+load_dotenv==0.1.0
+flask-pydantic==0.12.0

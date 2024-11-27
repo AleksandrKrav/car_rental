@@ -1,0 +1,400 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Car Rental API",
+    "description": "API for car rental",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "paths": {
+    "/auth/registration": {
+      "post": {
+        "summary": "Registration endpoint",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 16
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": ["first_name", "last_name", "password", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful registration"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login endpoint",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "minLength": 8,
+                  "maxLength": 16
+                },
+                "email": {
+                  "type": "string"
+                }
+              },
+              "required": ["password", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout endpoint",
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "summary": "Get user details",
+        "responses": {
+          "200": {
+            "description": "User details"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user details",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": ["first_name", "last_name", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": ["id"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          }
+        }
+      }
+    },
+    "/cars/": {
+      "get": {
+        "summary": "Get cars by filters",
+        "parameters": [
+          {
+            "name": "car_type",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rental_start_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "rental_end_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cars matching filters"
+          }
+        }
+      }
+    },
+    "/order/": {
+      "post": {
+        "summary": "Create a new order",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "car_id": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "rental_start_date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "rental_end_date": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": ["car_id", "price", "rental_start_date", "rental_end_date"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get orders",
+        "responses": {
+          "200": {
+            "description": "Order details"
+          }
+        }
+      }
+    },
+    "/order/get_by_id": {
+      "get": {
+        "summary": "Get order by ID",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order details by ID"
+          }
+        }
+      }
+    },
+    "/admin/cars": {
+      "post": {
+        "summary": "Create a new car",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "license_plate": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "car_type": {
+                  "type": "string"
+                }
+              },
+              "required": ["license_plate", "status", "car_type"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get cars by filter",
+        "parameters": [
+          {
+            "name": "car_type",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "rental_start_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "license_plate",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "rental_end_date",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cars matching filters"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update car status",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                }
+              },
+              "required": ["id", "status"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car status updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a car",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": ["id"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car deleted successfully"
+          }
+        }
+      }
+    },
+    "/admin/orders": {
+      "get": {
+        "summary": "Get all orders",
+        "responses": {
+          "200": {
+            "description": "List of all orders"
+          }
+        }
+      }
+    }
+  }
+}
